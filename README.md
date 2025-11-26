@@ -28,7 +28,7 @@ No more endless scrolling. Just pick a tab, choose how many, preview, and sweep!
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/yourusername/GmailSweep.git
+git clone https://github.com/faroughalvandi/GmailSweep.git
 cd GmailSweep
 
 # 2. Install dependencies

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>GmailSweep</title>
+    <style>
+        body { font-family: system-ui; background: #1a73e8; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin:0; }
+        .box { background: white; color: #333; padding: 40px; border-radius: 16px; width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        input { width: 100%; padding: 14px; margin: 12px 0; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+        button { width: 100%; padding: 14px; background: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #1557b0; }
+        a { color: #1a73e8; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>GmailSweep — Clean Your Gmail</h2>
+    <p>Enter your Gmail + 16-digit App Password</p>
+    {% if messages %}
+        {% for msg in messages %}
+            <div style="padding:10px; background:#ffcccb; margin:10px 0; border-radius:8px;">{{ msg }}</div>
+        {% endfor %}
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="yourname@gmail.com" required>
+        <input type="password" name="app_password" placeholder="abcd efgh ijkl mnop" required>
+        <button type="submit">Login →</button>
+    </form>
+    <p style="font-size:13px; margin-top:20px;">
+        <a href="https://myaccount.google.com/apppasswords" target="_blank">Generate App Password →</a>
+    </p>
+</div>
+</body>
+</html>

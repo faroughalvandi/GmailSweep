@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Preview - {{ category }}</title>
+    <style>
+        body { font-family: system-ui; background: #f9f9f9; margin: 40px; color: #333; }
+        h1 { color: #d93025; }
+        .info { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 6px 20px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden; }
+        th { background: #1a73e8; color: white; padding: 16px; }
+        td { padding: 14px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #f8f9fa; }
+        .actions { text-align: center; margin: 40px 0; }
+        .btn-delete { background: #d93025; color: white; padding: 18px 50px; border: none; border-radius: 12px; font-size: 20px; font-weight: bold; cursor: pointer; }
+        .btn-delete:hover { background: #a0001e; }
+        .back { margin-left: 20px; color: #666; text-decoration: none; font-size: 16px; }
+        .warning { background: #fff3cd; color: #856404; padding: 20px; border-radius: 10px; border: 1px solid #ffeaa7; margin-top: 40px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Preview: Latest {{ count }} emails from <strong>{{ category }}</strong></h1>
+    
+    <div class="info">
+        <p>You requested to delete: <strong>{{ requested_count }}</strong> emails</p>
+        <p>Total emails in this category: <strong>{{ before_count }}</strong></p>
+    </div>
+
+    <table>
+        <tr><th>#</th><th>Subject</th><th>From</th></tr>
+        {% for email in emails %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ email.subject|truncatechars:100 }}</td>
+            <td>{{ email.sender|truncatechars:60 }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">No emails found (maybe already cleaned!)</td></tr>
+        {% endfor %}
+    </table>
+
+    <div class="actions">
+        <form method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="confirm" value="yes">
+            <button type="submit" class="btn-delete">
+                PERMANENTLY DELETE THESE {{ count }} EMAILS
+            </button>
+        </form>
+        <a href="{% url 'dashboard' %}" class="back">← Back to Dashboard</a>
+    </div>
+
+    <div class="warning">
+        این عمل قابل بازگشت نیست! ایمیل‌ها برای همیشه حذف می‌شوند (نه به سطل زباله).
+        <br><br>
+        This action is PERMANENT and cannot be undone.
+    </div>
+</body>
+</html>

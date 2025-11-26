@@ -1,2 +1,0 @@
-Django>=5.0
-imapclient>=2.3.0
